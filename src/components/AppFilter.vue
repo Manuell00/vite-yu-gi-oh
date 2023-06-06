@@ -21,9 +21,8 @@ export default {
         <!-- Definisco la select -->
         <select>
             <option selected>Alien</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <!-- <option v-for="archetype in store.typeList" :key="archetype.archetype_name" :species="archetype"
+                    :value="archetype.archetype_name">{{ archetype.archetype_name }}</option> -->
         </select>
     </div>
 </template>
