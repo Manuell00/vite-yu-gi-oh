@@ -1,0 +1,66 @@
+<script>
+// Importo lo STORE
+import { store } from './store.js';
+// Importo AXIOS 
+import axios from 'axios';
+
+// Importo i COMPONENTI
+import AppHeader from './components/AppHeader.vue'
+import CharactersList from './components/CharacterList.vue'
+import AppLoader from './components/AppLoader.vue'
+
+
+// Inserisco l'EXPORT
+export default {
+    components: {
+        AppHeader,
+        CharactersList,
+        AppLoader
+    },
+
+    // Inserisco i dati
+    data() {
+        return {
+            store,
+        }
+    },
+
+    methods: {
+        // THEN mi dice che se va bene la chiamata allora fa quello che scrivo come codice
+        // CATCH invece intercetta l'errore e mi permette visualizzarli (ad esempio con un console.log)
+        getCharacters() {
+            axios.get(store.apiURL).then(res => {
+                store.charactersList = res.data.results;
+                store.loading = false;
+            })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    },
+
+    // CREATED viene utilizzato al posto di mounted perchè svolge l'attività quando viene creata l'app
+    created() {
+        this.getCharacters()
+    }
+}
+</script>
+
+
+<!-- TEMPLATE -->
+<template>
+    <!-- In questo caso visualizzo il componente AppLoader solo quando la variabile store.loading è == true, quando in realtà la pagina è caricata questo diventerà false e quindi non sarà più visualizzato  -->
+    <!-- <AppLoader v-if="store.loading" /> -->
+
+    <!-- Insrisco l'header -->
+    <AppHeader />
+
+    <!-- Inserisco il contenuto delle mie cards -->
+    <CharactersList />
+</template>
+
+
+<!-- STYLE -->
+<style lang="scss">
+@use './styles/general.scss';
+</style>
