@@ -45,7 +45,7 @@ export default {
 
 <!-- STYLE -->
 <style scoped lang="scss">
-@use '../styles/general.scss';
+@use '../styles/general.scss' as *;
 @use '../styles/partials/_variables.scss' as *;
 
 .big-container {

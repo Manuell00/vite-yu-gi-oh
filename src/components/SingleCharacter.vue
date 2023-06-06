@@ -12,11 +12,12 @@ export default {
 <!-- TEMPLATE -->
 <template>
     <!-- Card di esempio -->
-    <div class="text-center">
+    <div class="text-center card">
         <img class="img-fluid mb3" :src="details.image" :alt="details.name">
-        <h4>{{ details.name }}</h4>
-        <div>{{ details.status }}</div>
-        <div class="font-weight-bold">{{ details.species }}</div>
+        <div class="character-container">
+            <h4>{{ details.name }}</h4>
+            <p>{{ details.archetype }}</p>
+        </div>
     </div>
 </template>
 
@@ -24,21 +25,33 @@ export default {
 <!-- STYLE -->
 <style scoped lang="scss">
 @use '../styles/general.scss';
+@use '../styles/partials/_variables.scss' as *;
 
-img {
-    border-radius: 50%;
-    box-shadow: 0 0 6px 3px rgba(#000, 0.15);
-}
 
-h4 {
-    text-transform: capitalize;
+.card {
+    height: 400px;
+    width: 100%;
+    background-color: $bg-color;
 
-    &::after {
-        content: '';
-        display: block;
-        width: 40px;
-        height: 1px;
-        margin: 1rem auto
+    img {
+        height: 220px;
+        width: 100%;
     }
+
+    .character-container {
+        height: 180px;
+        width: auto;
+
+        h4 {
+            text-transform: uppercase;
+            font-weight: 700;
+            color: white;
+        }
+
+        p {
+            color: black;
+        }
+    }
+
 }
 </style>

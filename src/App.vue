@@ -30,7 +30,7 @@ export default {
         // CATCH invece intercetta l'errore e mi permette visualizzarli (ad esempio con un console.log)
         getCharacters() {
             axios.get(store.apiURL).then(res => {
-                store.charactersList = res.data.results;
+                store.charactersList = res.data.data[0];
                 store.loading = false;
             })
                 .catch(err => {
