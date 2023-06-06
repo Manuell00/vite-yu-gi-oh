@@ -1,6 +1,6 @@
 <script>
 // Importo lo STORE
-import { store } from './../store.js';
+import { store } from '../store.js';
 
 // Importo i COMPONENTI
 import SingleCharacter from './SingleCharacter.vue'
@@ -12,7 +12,6 @@ export default {
         SingleCharacter
     },
 
-    // Anche qui inseriamo i data dello store così da poterlo utilizzare
     data() {
         return {
             store
@@ -23,23 +22,12 @@ export default {
 
 <!-- TEMPLATE -->
 <template>
-    <div class="big-container">
-        <div class="row" id="select-row">
-            <select class="form-select w-25" aria-label="Default select example">
-                <option selected>Alien</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
+    <section class="container">
+        <div id="len-row"></div>
+        <div id="cardList">
+            <SingleCharacter v-for="character in store.charactersList" :key="character.id" :details="character" />
         </div>
-        <section class="container">
-            <div class="row">
-                <div v-for="character in store.charactersList" :key="character.id" class="col-6 col-md-4 col-lg-3 mb-3">
-                    <SingleCharacter :details="character" />
-                </div>
-            </div>
-        </section>
-    </div>
+    </section>
 </template>
 
 
@@ -48,18 +36,22 @@ export default {
 @use '../styles/general.scss' as *;
 @use '../styles/partials/_variables.scss' as *;
 
-.big-container {
-    background-color: $bg-color;
-    height: calc(100vh - 100px);
+section {
+    color: white;
+    border: 50px solid white;
 
-    #select-row {
-        padding: 20px 15%;
+    #len-row {
+
+        width: calc(100% - 10px);
+        height: 60px;
+        color: white;
+        background-color: black;
     }
 
-    .container {
-        height: calc(100vh - 100px);
-        background-color: white;
-        border: 10px solid white;
+    #cardList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 }
 </style>

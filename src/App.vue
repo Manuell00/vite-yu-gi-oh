@@ -7,6 +7,7 @@ import axios from 'axios';
 // Importo i COMPONENTI
 import AppHeader from './components/AppHeader.vue'
 import CharactersList from './components/CharacterList.vue'
+import AppFilter from './components/AppFilter.vue'
 import AppLoader from './components/AppLoader.vue'
 
 
@@ -15,6 +16,7 @@ export default {
     components: {
         AppHeader,
         CharactersList,
+        AppFilter,
         AppLoader
     },
 
@@ -30,12 +32,11 @@ export default {
         // CATCH invece intercetta l'errore e mi permette visualizzarli (ad esempio con un console.log)
         getCharacters() {
             axios.get(store.apiURL).then(res => {
-                store.charactersList = res.data.data[0];
+                store.charactersList = res.data.data;
                 store.loading = false;
+            }).catch(err => {
+                console.log(err.message);
             })
-                .catch(err => {
-                    console.log(err);
-                })
         }
     },
 
@@ -50,17 +51,30 @@ export default {
 <!-- TEMPLATE -->
 <template>
     <!-- In questo caso visualizzo il componente AppLoader solo quando la variabile store.loading è == true, quando in realtà la pagina è caricata questo diventerà false e quindi non sarà più visualizzato  -->
-    <!-- <AppLoader v-if="store.loading" /> -->
+    <AppLoader v-if="store.loading" />
 
     <!-- Insrisco l'header -->
     <AppHeader />
 
-    <!-- Inserisco il contenuto delle mie cards -->
-    <CharactersList />
+    <!-- Definisco il main -->
+    <main>
+        <section class="main-container">
+            <!-- Inserisco una select di ricerca -->
+            <AppFilter />
+            <!-- Inserisco il contenuto delle mie cards -->
+            <CharactersList />
+        </section>
+
+    </main>
 </template>
 
 
 <!-- STYLE -->
 <style lang="scss">
-@use './styles/general.scss';
+@use './styles/general.scss' as *;
+@use './styles/partials/variables.scss' as *;
+
+main {
+    background-color: $bg-color;
+}
 </style>
