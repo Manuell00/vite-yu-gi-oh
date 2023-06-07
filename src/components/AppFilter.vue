@@ -6,23 +6,28 @@ import { store } from './../store.js';
 export default {
     name: 'AppFilter',
 
+
     // Anche qui inseriamo i data dello store così da poterlo utilizzare
     data() {
         return {
             store
         }
-    }
+    },
 }
 </script>
 
 <!-- TEMPLATE -->
 <template>
     <div id="select-row">
-        <!-- Definisco la select -->
-        <select>
-            <option selected>Alien</option>
-            <!-- <option v-for="archetype in store.typeList" :key="archetype.archetype_name" :species="archetype"
-                    :value="archetype.archetype_name">{{ archetype.archetype_name }}</option> -->
+        <!-- Definisco la SELECT -->
+        <!-- Quando succede l'evendo del change della selection, con l'emit andrò dal genitore padre a dirgli "guarda che è successo questo evento", fatto ciò potrò chiamare nel padre un altra funzione per, in questo caso, modificare la visualizzazione dei dati in pagina -->
+        <!-- Attraverso il v-model riporto il valore della selection nella variabile filteredArchetype -->
+        <select v-model="store.filteredArchetype" @change="$event => $emit('mySelection')">
+            <!-- Imposto un value predefinito pari a vuoto "" -->
+            <option value="">Seleziona archetipo</option>
+            <!-- Inserisco la lista degli archetipi all'interno dell'array filterList -->
+            <option v-for="archetype in store.filterList" :key="archetype.archetype_name" :species="archetype"
+                :value="archetype.archetype_name">{{ archetype.archetype_name }}</option>
         </select>
     </div>
 </template>

@@ -31,15 +31,38 @@ export default {
         // THEN mi dice che se va bene la chiamata allora fa quello che scrivo come codice
         // CATCH invece intercetta l'errore e mi permette visualizzarli (ad esempio con un console.log)
         getCharacters() {
+            // Ridefinisco i due array da popolare
             let apiURL = store.apiURL
+            let filterApiURL = store.filterURL
+            let archetypeUser = store.filteredArchetype
 
-            axios.get(apiURL).then(res => {
-                store.charactersList = res.data.data;
-                store.loading = false;
+            // Inizio popolando l'array filterList con gli archetype
+            axios.get(filterApiURL).then(res => {
+                store.filterList = res.data;
             })
                 .catch(err => {
                     console.log(err);
                 })
+
+            // Chiamata completa
+            if (archetypeUser === "") {
+                axios.get(`${apiURL}?num=20&offset=0`).then(res => {
+                    store.charactersList = res.data.data;
+                })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+
+            // Chiamata filtrata
+            else if (archetypeUser !== "") {
+                axios.get(`${apiURL}?archetype=${archetypeUser}`).then(res => {
+                    store.charactersList = res.data.data;
+                })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
         }
     },
 
@@ -63,7 +86,7 @@ export default {
     <main>
         <section class="main-container">
             <!-- Inserisco una select di ricerca -->
-            <AppFilter />
+            <AppFilter @mySelection="getCharacters" />
             <!-- Inserisco il contenuto delle mie cards -->
             <CharactersList />
         </section>
@@ -79,5 +102,8 @@ export default {
 
 main {
     background-color: $bg-color;
+    height: auto;
+    min-height: calc(100vh - 150px);
+    padding-bottom: 100px;
 }
 </style>

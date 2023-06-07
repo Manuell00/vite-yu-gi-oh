@@ -12,11 +12,13 @@ export default {
         SingleCharacter
     },
 
+
     data() {
         return {
             store
         }
-    }
+    },
+
 }
 </script>
 
@@ -36,7 +38,7 @@ export default {
 @use '../styles/general.scss' as *;
 @use '../styles/partials/_variables.scss' as *;
 
-section {
+.container {
     color: white;
     border: 50px solid white;
 
