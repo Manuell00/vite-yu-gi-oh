@@ -12,12 +12,18 @@ export default {
         SingleCharacter
     },
 
-
     data() {
         return {
             store
         }
     },
+
+    computed: {
+        numberCards() {
+            console.log(store.charactersList.length);
+            return store.charactersList.length
+        }
+    }
 
 }
 </script>
@@ -25,7 +31,9 @@ export default {
 <!-- TEMPLATE -->
 <template>
     <section class="container">
-        <div id="len-row"></div>
+        <div id="len-row">
+            <h5> Il numero di carte trovate è : {{ numberCards }}</h5>
+        </div>
         <div id="cardList">
             <SingleCharacter v-for="character in store.charactersList" :key="character.id" :details="character" />
         </div>
@@ -43,11 +51,14 @@ export default {
     border: 50px solid white;
 
     #len-row {
-
         width: calc(100% - 10px);
         height: 60px;
         color: white;
         background-color: black;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 20px;
     }
 
     #cardList {
