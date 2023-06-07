@@ -52,6 +52,14 @@ export default {
                     .catch(err => {
                         console.log(err);
                     })
+
+                    // Inserisco questo metodo per visualizzare la pagina di loading
+                    .finally(() => {
+                        store.loading = true
+                        setTimeout(() => {
+                            store.loading = false;
+                        }, 3000);
+                    });
             }
 
             // Chiamata filtrata
@@ -76,22 +84,25 @@ export default {
 
 <!-- TEMPLATE -->
 <template>
+    <div v-if="store.loading">
+        <AppLoader />
+    </div>
     <!-- In questo caso visualizzo il componente AppLoader solo quando la variabile store.loading è == true, quando in realtà la pagina è caricata questo diventerà false e quindi non sarà più visualizzato  -->
-    <AppLoader v-if="store.loading" />
+    <div v-else>
+        <AppHeader />
 
+        <!-- Definisco il main -->
+        <main>
+            <section class="main-container">
+                <!-- Inserisco una select di ricerca -->
+                <AppFilter @mySelection="getCharacters" />
+                <!-- Inserisco il contenuto delle mie cards -->
+                <CharactersList />
+            </section>
+
+        </main>
+    </div>
     <!-- Insrisco l'header -->
-    <AppHeader />
-
-    <!-- Definisco il main -->
-    <main>
-        <section class="main-container">
-            <!-- Inserisco una select di ricerca -->
-            <AppFilter @mySelection="getCharacters" />
-            <!-- Inserisco il contenuto delle mie cards -->
-            <CharactersList />
-        </section>
-
-    </main>
 </template>
 
 
